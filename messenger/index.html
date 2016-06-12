@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>messenger</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<style>
+		#chat{
+			height:500px;
+		}
+		#contentWrap {
+			display: none;
+		}
+		#chatWrap {
+			float: left;
+			border: 1px #000 solid;
+		}
+	</style>
+</head>
+<body>
+	<div id="nickname"><p>Enter a username:</p>
+	<form id="setusername">
+		<input size="35" id="username"></input>
+		<input type="submit" class = "btn btn-default"></input>
+	</form>
+	<p id = "errormessage"></p>
+	</div>
+	<div id = "contentWrap">
+	<div id = "chatWrap">
+	<div id = "chat">
+		<ul id="logList"><li><h3>Welcome to the chat!</h3></li></ul>
+	</div>
+	<form id="sendmessage">
+		<p id="username-area"></p>
+		<input size="35" id="message"></input>
+		<input type="submit" class = "btn btn-default"></input>
+	</form>
+	</div>
+	<div id="users"></div>
+	</div>
+</body>
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script src = "/socket.io/socket.io.js"></script>
+<script>
+	$(function(){
+	console.log("Omg");
+	var socket = io.connect();
+	var $messageForm = $('#sendmessage');
+	var $messageBox = $('#message');
+	var $chat = $('#chat');
+	var $nickForm = $('#setusername');
+	var $error = $('errormessage');
+	var username;
+
+	$nickForm.submit(function(e) {
+		e.preventDefault();
+		console.log("Nick name form submitted");
+		socket.emit('new user', $('#username').val(), function(data, nickname) {
+			if(data) {
+				$('#nickname').hide();
+				$('#contentWrap').show();
+				//console.log($('#username').val());
+				username = nickname + ':';
+			} else {
+				$('#errormessage').append("Wrong");
+			}
+		});
+		$('#username').val('');
+	});
+
+	$messageForm.submit(function(e) {
+		e.preventDefault();
+		console.log("Hey dude")
+		socket.emit('send message', $messageBox.val());
+		$messageBox.val(" ");
+	});
+
+	socket.on('new message', function(data){
+		console.log(data.length);
+		if (data.length === 25) {
+			console.log("I should remove something");
+			$('#logList li').first().remove();
+		}
+		$("#logList").append("<li>"+data[data.length-1].nickname+ ": "+data[data.length-1].message + "</li>");
+	});
+}());
+</script>
+</html>

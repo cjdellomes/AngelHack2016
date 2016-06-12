@@ -17,11 +17,14 @@
   },
   "homepage": "https://github.com/cjdellomes/AngelHack2016#readme",
   "dependencies": {
+    "body-parser": "^1.15.1",
     "dotenv": "^2.0.0",
     "electron-packager": "^7.0.3",
     "express": "^4.13.4",
     "google-auth-library": "^0.9.8",
     "googleapis": "^8.0.0",
-    "md5": "^2.1.0"
+    "md5": "^2.1.0",
+    "mongodb": "^2.1.18",
+    "socket.io": "^1.4.6"
   }
 }
