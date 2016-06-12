@@ -33,10 +33,29 @@
 	
 	</div>
 	
-
+<ul id="messages"></ul>
+    <form action="">
+      <input id="m" autocomplete="off" /><button>Send</button>
+    </form>
+  </body>
 
 
 
 
 </body>
+<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io();
+  $('form').submit(function(){
+  	console.log("I was clicked");
+    socket.emit('chat', $('#m').val());
+    $('#m').val('');
+    return false;
+  });
+  socket.on('chat', function(msg){
+  	console.log("I recieved function");
+    $('#messages').append($('<li>').text(msg));
+  });
+</script>
 </html>
