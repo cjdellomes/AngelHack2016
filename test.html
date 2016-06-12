@@ -97,15 +97,18 @@ function loadGmailApi() {
     });
 
     request.execute(function(response) {
-      console.log(response);
-      /*$.each(response.messages, function() {
+      //console.log(response);
+      $.each(response.messages, function() {
         var messageRequest = gapi.client.gmail.users.messages.get({
           'userId': 'cjdellomes@gmail.com',
           'id': this.id
         });
 
-        messageRequest.execute(appendMessageRow);
-      });*/
+        messageRequest.execute(function(response) {
+          console.log(response);
+        });
+        //messageRequest.execute(appendMessageRow);
+      });
     });
   }
      /*function appendMessageRow(message) {
