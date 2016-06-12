@@ -2,7 +2,7 @@
   "name": "angelhack",
   "version": "1.0.0",
   "description": "Code written for the AngelHack 2016 Los Angeles hackathon",
-  "main": "ui.html",
+  "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -20,6 +20,7 @@
     "dotenv": "^2.0.0",
     "google-auth-library": "^0.9.8",
     "googleapis": "^8.0.0",
+    "electron-packager": "^7.0.3",
     "md5": "^2.1.0"
   }
 }
